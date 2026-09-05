@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch công tác lãnh đạo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+/* ============================================================
+   HỆ TOKEN
+   ============================================================ */
+:root{
+  --bg:#E9EDE9;
+  --bg-deep:#DDE4DE;
+  --surface:#FFFFFF;
+  --surface-2:#F5F7F4;
+  --ink:#16241D;
+  --ink-2:#42544A;
+  --muted:#75857A;
+  --line:#D3DCD5;
+  --line-strong:#B8C6BC;
+  --primary:#1F4A3C;
+  --primary-2:#2C6551;
+  --primary-soft:#DCE8E1;
+  --brass:#A97A2F;
+  --brass-soft:#F1E5CE;
+  --signal:#B33A2B;
+  --signal-soft:#F6E1DD;
+  --ok:#2E7D62;
+  --ok-soft:#DCEDE5;
+  --shadow:0 1px 2px rgba(20,40,30,.06), 0 8px 24px -16px rgba(20,40,30,.35);
+  --r-s:6px; --r-m:10px; --r-l:16px;
+  --rail:236px;
+}
+html[data-theme="dark"]{
+  --bg:#101714;
+  --bg-deep:#0B110E;
+  --surface:#17211D;
+  --surface-2:#1D2924;
+  --ink:#E4EDE7;
+  --ink-2:#B4C4BA;
+  --muted:#87978C;
+  --line:#28352E;
+  --line-strong:#3A4A41;
+  --primary:#4E9A7E;
+  --primary-2:#63B294;
+  --primary-soft:#1D3A30;
+  --brass:#D2A45C;
+  --brass-soft:#33291A;
+  --signal:#E0705C;
+  --signal-soft:#3A211C;
+  --ok:#5FBE9A;
+  --ok-soft:#183028;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Be Vietnam Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============================================================
+   KHUNG
+   ============================================================ */
+.shell{display:grid;grid-template-columns:var(--rail) 1fr;min-height:100vh}
+.rail{
+  background:var(--primary);color:#EAF2EC;
+  display:flex;flex-direction:column;gap:2px;
+  padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+html[data-theme="dark"] .rail{background:var(--bg-deep);border-right:1px solid var(--line)}
+.brand{padding:4px 8px 18px;display:flex;gap:10px;align-items:flex-start}
+.brand .mark{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:var(--brass);color:#22160A;display:grid;place-items:center;
+  font-weight:800;font-size:15px;letter-spacing:-.5px;
+}
+.brand h1{margin:0;font-size:15px;font-weight:700;letter-spacing:-.2px;line-height:1.25}
+.brand p{margin:2px 0 0;font-size:11.5px;opacity:.65}
+.nav-group{margin-top:14px;padding:0 8px 6px;font-size:11px;opacity:.5;font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;width:100%;
+  background:transparent;border:none;color:inherit;text-align:left;
+  padding:9px 10px;border-radius:8px;font-size:13.5px;font-weight:500;
+  transition:background .12s ease;
+}
+.nav-item:hover{background:rgba(255,255,255,.09)}
+.nav-item.on{background:rgba(255,255,255,.16);font-weight:600}
+html[data-theme="dark"] .nav-item.on{background:var(--primary-soft)}
+.nav-item .ic{width:18px;text-align:center;font-size:14px;opacity:.9}
+.nav-item .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.18);padding:1px 7px;border-radius:99px}
+.rail-foot{margin-top:auto;padding:12px 8px 0;font-size:11.5px;opacity:.6;border-top:1px solid rgba(255,255,255,.14)}
+.link-btn{background:none;border:none;color:inherit;padding:4px 0;font-size:11.5px;text-decoration:underline;opacity:.8}
+
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{
+  position:sticky;top:0;z-index:30;background:var(--surface);
+  border-bottom:1px solid var(--line);padding:12px 20px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.page-title{font-size:19px;font-weight:800;letter-spacing:-.4px;margin:0}
+.page-sub{font-size:12.5px;color:var(--muted);margin:1px 0 0}
+.spacer{flex:1}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:99px;padding:7px 14px;min-width:220px;
+}
+.search input{border:none;background:none;outline:none;width:100%;font-size:13.5px}
+.btn{
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+  border-radius:8px;padding:8px 14px;font-size:13.5px;font-weight:600;
+  display:inline-flex;align-items:center;gap:7px;transition:.12s ease;
+}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary-2)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn.danger{color:var(--signal);border-color:var(--signal)}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.icon-btn{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--line);
+  background:var(--surface);display:grid;place-items:center;font-size:15px;
+}
+.icon-btn:hover{background:var(--surface-2)}
+
+.content{padding:20px;flex:1;max-width:1500px;width:100%}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{border:none;background:none;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--primary);color:#fff}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:99px;
+  border:1.5px solid var(--line);background:var(--surface);font-size:12.5px;font-weight:500;color:var(--ink-2);
+}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.chip.on{color:#fff;border-color:transparent}
+.chip.mut{opacity:.45}
+
+/* ============================================================
+   THẺ & LƯỚI
+   ============================================================ */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow)}
+.card-h{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.card-h h3{margin:0;font-size:14.5px;font-weight:700;letter-spacing:-.2px}
+.card-b{padding:16px}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.split{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;align-items:start}
+
+/* KPI — điểm nhấn: số lớn nằm trên vạch màu dày */
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:14px 16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--primary)}
+.kpi.brass::before{background:var(--brass)}
+.kpi.signal::before{background:var(--signal)}
+.kpi.ok::before{background:var(--ok)}
+.kpi .n{font-size:30px;font-weight:800;letter-spacing:-1.4px;line-height:1.05}
+.kpi .l{font-size:12.5px;color:var(--muted);margin-top:3px}
+.kpi .d{font-size:11.5px;color:var(--ink-2);margin-top:7px}
+
+/* ============================================================
+   THẺ LỊCH
+   ============================================================ */
+.ev{
+  display:grid;grid-template-columns:64px 1fr auto;gap:12px;
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--primary);
+  border-radius:var(--r-m);padding:11px 13px;margin-bottom:9px;transition:.12s ease;
+}
+.ev:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+.ev.done{opacity:.62}
+.ev.cancelled{opacity:.45}
+.ev.cancelled .ev-title{text-decoration:line-through}
+.ev-time{font-size:13px;font-weight:700;line-height:1.35;padding-top:1px}
+.ev-time .to{font-weight:400;color:var(--muted);font-size:12px}
+.ev-title{font-size:14.5px;font-weight:600;letter-spacing:-.15px;margin-bottom:4px}
+.ev-meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px;color:var(--ink-2);align-items:center}
+.ev-note{font-size:12.5px;color:var(--muted);margin-top:5px}
+.ev-actions{display:flex;flex-direction:column;gap:5px}
+.who{display:inline-flex;align-items:center;gap:5px}
+.av{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:9.5px;font-weight:700;color:#fff;flex-shrink:0}
+.tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
+.tag.urgent{background:var(--signal-soft);color:var(--signal)}
+.tag.important{background:var(--brass-soft);color:var(--brass)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.line{background:transparent;border:1px solid var(--line-strong);color:var(--muted);font-weight:600}
+.mini{
+  border:1px solid var(--line);background:var(--surface);border-radius:6px;
+  width:28px;height:26px;display:grid;place-items:center;font-size:12px;color:var(--muted);
+}
+.mini:hover{background:var(--surface-2);color:var(--ink)}
+
+/* ============================================================
+   TIMELINE NGÀY (điểm nhấn của app)
+   ============================================================ */
+.tl-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;box-shadow:var(--shadow)}
+.tl-head{display:grid;border-bottom:1px solid var(--line);background:var(--surface-2);position:sticky;top:0;z-index:5}
+.tl-head .cell{padding:10px 12px;border-left:1px solid var(--line);min-width:0}
+.tl-head .cell:first-child{border-left:none}
+.tl-head .nm{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-head .ti{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-body{display:grid;position:relative;max-height:min(70vh,720px);overflow:auto}
+.tl-hours{border-right:1px solid var(--line);background:var(--surface-2)}
+.tl-hour{height:56px;font-size:11px;color:var(--muted);padding:2px 8px;text-align:right;border-bottom:1px dashed var(--line)}
+.tl-col{border-left:1px solid var(--line);position:relative;min-width:0}
+.tl-col:first-child{border-left:none}
+.tl-slot{height:56px;border-bottom:1px dashed var(--line)}
+.tl-ev{
+  position:absolute;left:3px;right:3px;border-radius:7px;padding:5px 7px;overflow:hidden;
+  color:#fff;font-size:11.5px;line-height:1.28;cursor:pointer;border:1px solid rgba(0,0,0,.12);
+}
+.tl-ev b{display:block;font-size:12px;font-weight:700;margin-bottom:1px}
+.tl-ev.cancelled{opacity:.45;text-decoration:line-through}
+.now-line{position:absolute;left:0;right:0;height:2px;background:var(--signal);z-index:4;pointer-events:none}
+.now-line::before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--signal)}
+
+/* ============================================================
+   LƯỚI TUẦN / THÁNG
+   ============================================================ */
+.wk{width:100%;border-collapse:collapse;background:var(--surface);font-size:12.5px}
+.wk th,.wk td{border:1px solid var(--line);padding:8px;vertical-align:top}
+.wk thead th{background:var(--surface-2);font-size:11.5px;font-weight:700;text-align:left;position:sticky;top:0;z-index:2}
+.wk th.today,.wk td.today{background:var(--primary-soft)}
+.wk .lead-cell{width:150px;font-weight:600;background:var(--surface-2)}
+.wk-chip{
+  border-left:3px solid var(--primary);background:var(--surface-2);
+  border-radius:5px;padding:4px 6px;margin-bottom:5px;cursor:pointer;font-size:11.5px;line-height:1.3;
+}
+.wk-chip b{font-weight:700}
+.mth{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;min-width:820px}
+.mth .hd{background:var(--surface-2);padding:8px;font-size:11.5px;font-weight:700;text-align:center}
+.mth .dy{background:var(--surface);min-height:104px;padding:6px;position:relative;min-width:0;overflow:hidden}
+.mth .dy.out{background:var(--surface-2);opacity:.6}
+.mth .dy.today{box-shadow:inset 0 0 0 2px var(--brass)}
+.mth .dy .n{font-size:12.5px;font-weight:700;margin-bottom:4px}
+.mth .dy .n small{font-weight:400;color:var(--muted)}
+.m-chip{font-size:10.5px;padding:2px 5px;border-radius:4px;color:#fff;margin-bottom:3px;cursor:pointer;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ============================================================
+   NHIỆM VỤ
+   ============================================================ */
+.task{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border:1px solid var(--line);
+  border-radius:var(--r-m);background:var(--surface);margin-bottom:8px}
+.task.done{opacity:.55}
+.task.done .t-content{text-decoration:line-through}
+.task input[type=checkbox]{width:17px;height:17px;margin-top:2px;accent-color:var(--primary);flex-shrink:0}
+.t-content{font-size:13.5px;font-weight:600}
+.t-meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.bar{height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--primary);border-radius:99px}
+
+/* ============================================================
+   BẢNG QUẢN LÝ
+   ============================================================ */
+.tb{width:100%;border-collapse:collapse;font-size:13px}
+.tb th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:700;
+  border-bottom:1.5px solid var(--line);padding:9px 10px;white-space:nowrap}
+.tb td{border-bottom:1px solid var(--line);padding:10px;vertical-align:middle}
+.tb tr:last-child td{border-bottom:none}
+.tb tbody tr:hover{background:var(--surface-2)}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ============================================================
+   MODAL / FORM
+   ============================================================ */
+.backdrop{position:fixed;inset:0;background:rgba(12,24,18,.5);backdrop-filter:blur(3px);
+  z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:0}
+@media(min-width:721px){.backdrop{align-items:center;padding:24px}}
+.modal{background:var(--surface);width:100%;max-width:660px;max-height:92vh;overflow-y:auto;
+  border-radius:var(--r-l) var(--r-l) 0 0;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+@media(min-width:721px){.modal{border-radius:var(--r-l)}}
+.modal-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.modal-h h2{margin:0;font-size:17px;font-weight:800;letter-spacing:-.3px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+.field input,.field select,.field textarea{
+  width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;
+  background:var(--surface);font-size:13.5px;outline:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary)}
+.field textarea{min-height:66px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.pick{display:flex;flex-wrap:wrap;gap:7px}
+.pick .opt{border:1.5px solid var(--line);border-radius:8px;padding:7px 11px;font-size:12.5px;
+  display:flex;align-items:center;gap:7px;background:var(--surface)}
+.pick .opt.on{border-color:var(--primary);background:var(--primary-soft);font-weight:600}
+.sw{width:26px;height:26px;border-radius:7px;border:2px solid transparent;cursor:pointer}
+.sw.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface) inset}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions .btn{flex:1;justify-content:center}
+
+/* ============================================================
+   PHỤ TRỢ
+   ============================================================ */
+.empty{text-align:center;padding:44px 20px;color:var(--muted)}
+.empty .big{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:5px}
+.banner{display:flex;gap:11px;align-items:center;padding:11px 14px;border-radius:var(--r-m);
+  font-size:13px;margin-bottom:14px;border:1px solid}
+.banner.warn{background:var(--brass-soft);border-color:var(--brass);color:var(--ink)}
+.banner.bad{background:var(--signal-soft);border-color:var(--signal);color:var(--ink)}
+.toasts{position:fixed;right:16px;bottom:16px;z-index:200;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--ink);color:var(--bg);padding:11px 15px;border-radius:9px;font-size:13px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:330px}
+.toast.bad{background:var(--signal);color:#fff}
+.toast.ok{background:var(--ok);color:#fff}
+.dotstat{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.dotstat.live{background:var(--ok)}
+.dotstat.off{background:var(--brass)}
+.skel{background:linear-gradient(90deg,var(--surface-2),var(--line),var(--surface-2));
+  background-size:200% 100%;animation:sh 1.3s linear infinite;border-radius:8px;height:64px;margin-bottom:9px}
+@keyframes sh{to{background-position:-200% 0}}
+.btn:disabled,.icon-btn:disabled{opacity:.6;cursor:not-allowed;pointer-events:none}
+.spin{width:13px;height:13px;border:2px solid rgba(120,130,122,.35);border-top-color:currentColor;
+  border-radius:50%;display:inline-block;vertical-align:-2px;margin-right:7px;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fab{display:none}
+
+/* Màn hình đăng nhập / chờ cấp quyền */
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
+.gate-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--shadow);max-width:380px;width:100%;padding:32px 28px;text-align:center}
+.gate-card .mark{width:52px;height:52px;border-radius:14px;background:var(--brass);color:#22160A;
+  display:grid;place-items:center;font-weight:800;font-size:20px;margin:0 auto 16px}
+.gate-card h2{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.3px}
+.gate-card p{margin:0 0 20px;font-size:13px;color:var(--muted);line-height:1.6}
+.gate-card .gbtn-box{display:flex;justify-content:center;min-height:44px}
+.gate-email{display:inline-block;background:var(--surface-2);border:1px solid var(--line);border-radius:99px;
+  padding:6px 14px;font-size:12.5px;font-weight:600;margin-bottom:6px}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1080px){.g4{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:fixed;bottom:0;top:auto;left:0;right:0;height:auto;flex-direction:row;
+    padding:6px 6px calc(6px + env(safe-area-inset-bottom));overflow-x:auto;z-index:60;
+    border-top:1px solid rgba(255,255,255,.15)}
+  .brand,.nav-group,.rail-foot{display:none}
+  .nav-item{flex-direction:column;gap:3px;font-size:10.5px;padding:7px 10px;min-width:62px;text-align:center}
+  .nav-item .ic{font-size:17px}
+  .nav-item .count{position:absolute;top:2px;right:6px;font-size:9px;padding:0 5px}
+  .nav-item{position:relative}
+  .content{padding:14px 13px 96px}
+  .topbar{padding:11px 13px}
+  .g3,.g2{grid-template-columns:1fr}
+  .search{min-width:0;flex:1}
+  .fab{display:grid;position:fixed;right:16px;bottom:78px;width:54px;height:54px;border-radius:50%;
+    background:var(--primary);color:#fff;border:none;font-size:25px;place-items:center;z-index:55;
+    box-shadow:0 8px 22px rgba(0,0,0,.28)}
+  .ev{grid-template-columns:56px 1fr;grid-template-rows:auto auto}
+  .ev-actions{grid-column:1/-1;flex-direction:row;justify-content:flex-end}
+}
+@media(max-width:520px){.g4{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr}}
+
+/* ============================================================
+   IN ẤN — mẫu lịch công tác tuần
+   ============================================================ */
+@media print{
+  .rail,.topbar,.toolbar,.fab,.toasts,.no-print{display:none!important}
+  body{background:#fff;font-size:11pt}
+  .shell{display:block}
+  .content{padding:0;max-width:none}
+  .card,.tl-wrap{box-shadow:none;border:none}
+  .wk th,.wk td{border:1px solid #999}
+  .print-head{display:block!important;text-align:center;margin-bottom:14px}
+  .print-head h2{font-size:14pt;margin:0 0 4px}
+  .print-head p{margin:0;font-size:10pt}
+  @page{size:A4 landscape;margin:12mm}
+}
+.print-head{display:none}
+</style>
+</head>
+<body>
+
+<!-- CỔNG ĐĂNG NHẬP — chỉ hiện khi đã bật Google Client ID -->
+<div class="gate" id="gate" style="display:none">
+  <div class="gate-card" id="gateCard"></div>
+</div>
+
+<div class="shell" id="appShell" style="display:none">
+  <!-- THANH ĐIỀU HƯỚNG -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">LĐ</div>
+      <div>
+        <h1>Lịch công tác lãnh đạo</h1>
+        <p id="brandSub">Đang khởi động…</p>
+      </div>
+    </div>
+    <div class="nav-group">Theo dõi</div>
+    <button class="nav-item" data-view="dashboard"><span class="ic">◈</span>Điều hành</button>
+    <button class="nav-item" data-view="day"><span class="ic">▤</span>Trong ngày</button>
+    <button class="nav-item" data-view="week"><span class="ic">▦</span>Trong tuần</button>
+    <button class="nav-item" data-view="month"><span class="ic">▩</span>Trong tháng</button>
+    <button class="nav-item" data-view="tasks"><span class="ic">✓</span>Nhiệm vụ<span class="count" id="navTaskCount">0</span></button>
+    <div class="nav-group" id="navGroupAdmin">Quản trị</div>
+    <button class="nav-item" data-view="leaders"><span class="ic">◐</span>Lãnh đạo</button>
+    <button class="nav-item" data-view="reports"><span class="ic">⇩</span>Báo cáo</button>
+    <button class="nav-item" data-view="settings"><span class="ic">⚙</span>Kết nối</button>
+    <div class="rail-foot">
+      <div><span class="dotstat" id="connDot"></span> <span id="connText">Chưa kết nối</span></div>
+      <div id="whoAmI" style="margin-top:6px"></div>
+      <button class="link-btn" id="themeBtn">Đổi nền sáng / tối</button>
+      <button class="link-btn" id="logoutBtn" style="display:none;margin-left:10px">Đăng xuất</button>
+    </div>
+  </aside>
+
+  <!-- NỘI DUNG -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <h2 class="page-title" id="pageTitle">Điều hành</h2>
+        <p class="page-sub" id="pageSub"></p>
+      </div>
+      <div class="spacer"></div>
+      <div class="search">
+        <span>⌕</span>
+        <input id="searchInput" placeholder="Tìm nội dung, địa điểm, người chuẩn bị…">
+      </div>
+      <select id="roleSelect" class="btn" style="font-weight:600"></select>
+      <button class="icon-btn" id="refreshBtn" title="Tải lại dữ liệu">↻</button>
+      <button class="btn primary no-print" id="addBtn">+ Thêm lịch</button>
+    </header>
+    <main class="content" id="content"></main>
+  </div>
+</div>
+
+<button class="fab" id="fabBtn" title="Thêm lịch">+</button>
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============================================================
+   0. CẤU HÌNH — dán URL Web App của Apps Script vào đây,
+      hoặc nhập trong màn hình "Kết nối".
+   ============================================================ */
+const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbwTCI6QE9LtqSn0unDHex5bccs286m76A6UEtGk8qb8wYNyPH6_VxvsgrsorWHS-v7y/exec";
+const DEFAULT_TOKEN   = "";   // trùng với API_TOKEN trong Script Properties, để trống nếu chưa đặt
+const GOOGLE_CLIENT_ID = "";  // dán Client ID Google vào đây (vd "xxxx.apps.googleusercontent.com").
+                               // Để trống = chưa bật đăng nhập, app chạy như bản demo cũ.
+
+/* ============================================================
+   1. TIỆN ÍCH
+   ============================================================ */
+const PALETTE = ["#1F4A3C","#A97A2F","#3E6E8E","#8E4B3E","#6B5B95","#2E7D62","#B06A2C","#4A5D3A","#7A3E5E","#356E7A"];
+const DOW = ["CN","T2","T3","T4","T5","T6","T7"];
+const PRIO = {normal:"Bình thường", important:"Quan trọng", urgent:"Khẩn"};
+const STAT = {planned:"Dự kiến", done:"Đã xong", cancelled:"Đã hủy"};
+const CATS = ["Họp nội bộ","Họp Tập đoàn","Tiếp khách","Kiểm tra hiện trường","Công tác ngoài","Đào tạo","Khác"];
+
+const pad = n => String(n).padStart(2,"0");
+const toISO = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const todayISO = () => toISO(new Date());
+const parseISO = iso => new Date(iso+"T00:00:00");
+const uid = () => "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const mins = t => { if(!t) return null; const [h,m]=t.split(":").map(Number); return h*60+(m||0); };
+const fmtDate = iso => { const d=parseISO(iso); return `${DOW[d.getDay()]}, ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`; };
+const fmtShort = iso => `${iso.slice(8,10)}/${iso.slice(5,7)}`;
+const initials = n => (n||"?").trim().split(/\s+/).slice(-2).map(w=>w[0]).join("").toUpperCase();
+const addDays = (iso,n) => { const d=parseISO(iso); d.setDate(d.getDate()+n); return toISO(d); };
+
+function weekOf(iso){
+  const d = parseISO(iso), dow = d.getDay();
+  const mon = new Date(d); mon.setDate(d.getDate() + (dow===0 ? -6 : 1-dow));
+  return Array.from({length:7},(_,i)=>{ const x=new Date(mon); x.setDate(mon.getDate()+i); return toISO(x); });
+}
+function monthGrid(iso){
+  const d = parseISO(iso), first = new Date(d.getFullYear(), d.getMonth(), 1);
+  const start = new Date(first); start.setDate(1 - ((first.getDay()+6)%7));
+  return Array.from({length:42},(_,i)=>{ const x=new Date(start); x.setDate(start.getDate()+i); return toISO(x); });
+}
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k]??null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+};
+const mem = {};
+
+function toast(msg, kind=""){
+  const el = document.createElement('div');
+  el.className = "toast "+kind; el.textContent = msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>{ el.style.opacity="0"; el.style.transition="opacity .3s"; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+/** Khóa một nút trong lúc xử lý bất đồng bộ, chặn bấm lặp gây trùng lịch. */
+async function withBusy(btn, busyLabel, fn){
+  if(!btn || btn.dataset.busy) return;
+  btn.dataset.busy = "1";
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spin"></span>${esc(busyLabel)}`;
+  try{ await fn(); }
+  finally{
+    btn.disabled = false;
+    btn.innerHTML = original;
+    delete btn.dataset.busy;
+  }
+}
+
+/* ============================================================
+   2. TRẠNG THÁI
+   ============================================================ */
+const state = {
+  apiUrl: store.get('lclv.api') || DEFAULT_API_URL,
+  token:  store.get('lclv.token') || DEFAULT_TOKEN,
+  idToken: store.get('lclv.idtoken') || "",
+  me: null,   // {email,name,role,leaderId} sau khi xác thực với backend — null nếu chưa bật đăng nhập hoặc chưa xong
+  online:false, loading:true, demo:false,
+  leaders:[], events:[],
+  role:"thuky",
+  view: store.get('lclv.view') || "dashboard",
+  date: todayISO(),
+  filterLeaders:new Set(),
+  filterPriority:"all",
+  filterStatus:"active",
+  search:"",
+  dayMode:"timeline",   // timeline | list
+  weekMode:"grid"       // grid | list
+};
+
+const isBoss = () => GOOGLE_CLIENT_ID ? (state.me && state.me.role === "thuky") : state.role === "thuky";
+const isEmployee = () => GOOGLE_CLIENT_ID ? (state.me && state.me.role === "nhanvien") : false;
+const leaderById = id => state.leaders.find(l=>l.id===id);
+const leaderColor = id => leaderById(id)?.color || "#8A968E";
+function visibleLeaderIds(){
+  // Đã bật đăng nhập thật: mọi vai trò đều xem được lịch của tất cả lãnh đạo,
+  // chỉ khác nhau ở quyền sửa (isBoss) và mức chi tiết được xem.
+  if(GOOGLE_CLIENT_ID || isBoss()){
+    if(state.filterLeaders.size===0) return state.leaders.map(l=>l.id);
+    return [...state.filterLeaders];
+  }
+  return [state.role];   // chế độ demo cũ: dropdown "Xem: tên lãnh đạo" giới hạn 1 người
+}
+const evLeaders = e => [e.hostId, ...(e.participantIds||[])].filter(Boolean);
+
+function filtered(){
+  const vis = visibleLeaderIds();
+  const q = state.search.trim().toLowerCase();
+  return state.events.filter(e=>{
+    if(!evLeaders(e).some(id=>vis.includes(id))) return false;
+    if(state.filterPriority!=="all" && e.priority!==state.filterPriority) return false;
+    if(state.filterStatus==="active" && e.status==="cancelled") return false;
+    if(state.filterStatus!=="all" && state.filterStatus!=="active" && e.status!==state.filterStatus) return false;
+    if(q){
+      const hay = [e.title,e.location,e.preparer,e.documents,e.note,e.conclusion,e.category].join(" ").toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+const eventsOn = iso => filtered().filter(e=>e.date===iso)
+  .sort((a,b)=>(a.start||"99:99").localeCompare(b.start||"99:99"));
+
+/* Phát hiện trùng lịch của cùng một lãnh đạo */
+function conflicts(){
+  const out = [];
+  const byLeaderDate = {};
+  filtered().filter(e=>e.status!=="cancelled").forEach(e=>{
+    evLeaders(e).forEach(id=>{
+      const k = id+"|"+e.date;
+      (byLeaderDate[k] = byLeaderDate[k]||[]).push(e);
+    });
+  });
+  Object.entries(byLeaderDate).forEach(([k,list])=>{
+    const [lid,date] = k.split("|");
+    list.sort((a,b)=>(a.start||"").localeCompare(b.start||""));
+    for(let i=0;i<list.length-1;i++){
+      const a=list[i], b=list[i+1];
+      const ae = mins(a.end)??((mins(a.start)??0)+60), bs = mins(b.start);
+      if(ae!=null && bs!=null && bs < ae) out.push({leaderId:lid, date, a, b});
+    }
+  });
+  return out;
+}
+const allTasks = () => state.events.flatMap(e => (e.tasks||[]).map((t,i)=>({...t, eventId:e.id, idx:i, event:e})));
+
+/* ============================================================
+   3. API CLIENT (Apps Script)
+   ============================================================ */
+const api = {
+  async post(action, payload){
+    if(!state.apiUrl) throw new Error("Chưa cấu hình đường dẫn API");
+    const body = {...(payload||{}), idToken: state.idToken || undefined};
+    const res = await fetch(state.apiUrl, {
+      method:"POST", redirect:"follow",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},   // tránh preflight CORS
+      body: JSON.stringify({action, payload: body, token: state.token})
+    });
+    const data = await res.json();
+    if(!data.ok) throw new Error(data.error || "Lỗi máy chủ");
+    return data.data;
+  },
+  jsonp(action, payload){
+    return new Promise((resolve,reject)=>{
+      const cb = "jp_"+Math.random().toString(36).slice(2,9);
+      const body = {...(payload||{}), idToken: state.idToken || undefined};
+      const s = document.createElement('script');
+      const t = setTimeout(()=>{ cleanup(); reject(new Error("Hết thời gian chờ")); }, 20000);
+      function cleanup(){ clearTimeout(t); delete window[cb]; s.remove(); }
+      window[cb] = d => { cleanup(); d.ok ? resolve(d.data) : reject(new Error(d.error||"Lỗi")); };
+      s.onerror = () => { cleanup(); reject(new Error("Không gọi được API")); };
+      s.src = `${state.apiUrl}?action=${encodeURIComponent(action)}&token=${encodeURIComponent(state.token)}`
+            + `&payload=${encodeURIComponent(JSON.stringify(body))}&callback=${cb}`;
+      document.head.appendChild(s);
+    });
+  },
+  async read(action, payload){
+    try { return await this.post(action, payload); }
+    catch(e){ return await this.jsonp(action, payload); }   // dự phòng khi bị chặn CORS
+  }
+};
+
+async function loadAll(opts={}){
+  const silent = !!opts.silent;
+  if(!silent){ state.loading = true; render(); }
+  if(!state.apiUrl){ seedDemo(); state.demo=true; state.online=false; state.loading=false; render(); return; }
+  try{
+    const d = await api.read("bootstrap");
+    state.leaders = d.leaders || [];
+    state.events  = d.events  || [];
+    state.online = true; state.demo = false;
+  }catch(err){
+    console.error(err); state.online = false;
+    if(state.events.length===0){ seedDemo(); state.demo = true; }
+    if(!silent) toast("Không kết nối được Google Sheet: "+err.message, "bad");
+  }
+  state.loading = false; render();
+}
+
+/* ============================================================
+   3b. ĐĂNG NHẬP GOOGLE (chỉ kích hoạt khi đã điền GOOGLE_CLIENT_ID)
+   ============================================================ */
+function showGate(kind, data){
+  document.getElementById('appShell').style.display = 'none';
+  const gate = document.getElementById('gate');
+  gate.style.display = 'flex';
+  const card = document.getElementById('gateCard');
+  if(kind === 'login'){
+    card.innerHTML = `
+      <div class="mark">LĐ</div>
+      <h2>Lịch công tác lãnh đạo</h2>
+      <p>Đăng nhập bằng tài khoản Google đã được cấp quyền để xem và cập nhật lịch làm việc.</p>
+      <div class="gbtn-box" id="gsiBtn"></div>`;
+    try{
+      google.accounts.id.renderButton(document.getElementById('gsiBtn'),
+        {theme:'outline', size:'large', shape:'pill', text:'signin_with', width:260});
+    }catch(e){ card.querySelector('.gbtn-box').textContent = 'Không tải được nút đăng nhập Google. Kiểm tra kết nối mạng và tải lại trang.'; }
+  } else if(kind === 'waiting'){
+    card.innerHTML = `
+      <div class="mark">⏳</div>
+      <h2>Chờ được cấp quyền</h2>
+      <p>Tài khoản dưới đây đã đăng nhập thành công nhưng chưa có trong danh sách người dùng được phép. Gửi email này cho thư ký để được thêm vào sheet <b>Users</b>.</p>
+      <div class="gate-email">${esc(data.email)}</div>
+      <div style="margin-top:14px"><button class="btn" id="retryBtn">Đã được cấp quyền, thử lại</button></div>
+      <div style="margin-top:10px"><button class="link-btn" id="switchAcc">Đăng nhập tài khoản khác</button></div>`;
+    document.getElementById('retryBtn').onclick = ()=> boot();
+    document.getElementById('switchAcc').onclick = ()=> logout();
+  } else {
+    card.innerHTML = `
+      <div class="mark">⚠</div>
+      <h2>Không đăng nhập được</h2>
+      <p>${esc((data&&data.message)||'')}</p>
+      <div style="margin-top:14px"><button class="btn" id="retryBtn2">Thử lại</button></div>`;
+    document.getElementById('retryBtn2').onclick = ()=> boot();
+  }
+}
+function hideGate(){
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('appShell').style.display = '';
+}
+async function handleCredentialResponse(response){
+  state.idToken = response.credential;
+  store.set('lclv.idtoken', state.idToken);
+  await boot();
+}
+function logout(){
+  state.idToken = ''; state.me = null;
+  store.set('lclv.idtoken', '');
+  try{ google.accounts.id.disableAutoSelect(); }catch(e){}
+  boot();
+}
+/** Điểm khởi động — quyết định hiện cổng đăng nhập hay vào thẳng app. */
+async function boot(){
+  if(!GOOGLE_CLIENT_ID){ hideGate(); loadAll(); return; }   // chưa bật đăng nhập → chạy như bản demo cũ
+  if(typeof google === 'undefined' || !google.accounts){ setTimeout(boot, 300); return; }
+
+  google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse, auto_select:true });
+  if(!state.idToken){ showGate('login'); try{ google.accounts.id.prompt(); }catch(e){} return; }
+
+  try{
+    const me = await api.read('me', {});
+    if(me.role === 'unregistered'){ state.me = null; showGate('waiting', me); return; }
+    state.me = me;
+    hideGate();
+    loadAll();
+  }catch(err){
+    state.idToken = ''; store.set('lclv.idtoken', '');
+    showGate('error', {message: err.message});
+  }
+}
+
+async function pushEvent(ev){
+  if(!state.online){ toast("Đang ở chế độ thử — thay đổi chưa lưu lên Sheet.", ""); return; }
+  await api.post("saveEvent", ev);
+}
+async function removeEvent(id){
+  if(!state.online) return;
+  await api.post("deleteEvent", {id});
+}
+async function pushLeader(l){
+  if(!state.online){ toast("Đang ở chế độ thử — thay đổi chưa lưu lên Sheet.", ""); return; }
+  await api.post("saveLeader", l);
+}
+async function removeLeader(id){
+  if(!state.online) return;
+  await api.post("deleteLeader", {id});
+}
+
+/* Dữ liệu thử khi chưa nối Sheet */
+function seedDemo(){
+  const t = todayISO();
+  state.leaders = [
+    {id:"L1", name:"Nguyễn Văn A", title:"Tổng Giám đốc", color:PALETTE[0], email:"", phone:""},
+    {id:"L2", name:"Trần Thị B", title:"Phó TGĐ phụ trách Sản xuất", color:PALETTE[1], email:"", phone:""},
+    {id:"L3", name:"Lê Văn C", title:"Phó TGĐ phụ trách Kế hoạch – Đầu tư", color:PALETTE[2], email:"", phone:""}
+  ];
+  state.events = [
+    {id:"E1",date:t,start:"08:00",end:"09:00",title:"Giao ban đầu tuần",location:"Phòng họp lớn",hostId:"L1",
+     participantIds:["L2","L3"],preparer:"Văn phòng",documents:"Báo cáo tiến độ tuần các phòng",
+     category:"Họp nội bộ",priority:"important",status:"planned",note:"",conclusion:"",tasks:[]},
+    {id:"E2",date:t,start:"09:30",end:"11:00",title:"Kiểm tra dây chuyền sơ chế mủ",location:"Nhà máy chế biến",
+     hostId:"L2",participantIds:[],preparer:"Phòng Kỹ thuật",documents:"",category:"Kiểm tra hiện trường",
+     priority:"normal",status:"planned",note:"",conclusion:"",tasks:[]},
+    {id:"E3",date:t,start:"14:00",end:"15:30",title:"Làm việc với đoàn công tác Tập đoàn",location:"Phòng khách",
+     hostId:"L1",participantIds:["L3"],preparer:"Phòng Tổ chức Hành chính",documents:"Báo cáo tích hợp GIS – Base",
+     category:"Họp Tập đoàn",priority:"urgent",status:"planned",note:"Về tiến độ chuyển đổi số",conclusion:"",tasks:[]},
+    {id:"E4",date:addDays(t,1),start:"08:30",end:"10:00",title:"Họp trực tuyến Ban Lãnh đạo Tập đoàn",
+     location:"Phòng họp trực tuyến",hostId:"L1",participantIds:["L2","L3"],preparer:"Văn phòng",documents:"",
+     category:"Họp Tập đoàn",priority:"urgent",status:"planned",note:"",conclusion:"",tasks:[]},
+    {id:"E5",date:addDays(t,-1),start:"08:00",end:"09:00",title:"Giao ban tuần trước",location:"Phòng họp lớn",
+     hostId:"L1",participantIds:[],preparer:"Văn phòng",documents:"",category:"Họp nội bộ",priority:"normal",
+     status:"done",note:"",conclusion:"Thống nhất đẩy nhanh tiến độ tích hợp Base – GIS.",
+     tasks:[{content:"Soạn văn bản kiến nghị API liên thông GIS",assignee:"Phòng TCHC",due:addDays(t,3),done:false},
+            {content:"Tổng hợp số liệu khai thác lô/tổ",assignee:"Phòng KTNN",due:addDays(t,-1),done:true}]},
+    {id:"E6",date:addDays(t,3),start:"09:00",end:"10:30",title:"Họp thẩm định dự án đầu tư mới",
+     location:"Phòng họp lớn",hostId:"L3",participantIds:["L2"],preparer:"Phòng KHĐT",documents:"Hồ sơ thẩm định",
+     category:"Họp nội bộ",priority:"important",status:"planned",note:"",conclusion:"",tasks:[]}
+  ];
+}
+
+/* ============================================================
+   4. RENDER — khung chung
+   ============================================================ */
+const TITLES = {
+  dashboard:["Điều hành","Toàn cảnh lịch làm việc của Ban lãnh đạo"],
+  day:["Trong ngày",""], week:["Trong tuần",""], month:["Trong tháng",""],
+  tasks:["Nhiệm vụ","Việc được giao sau các cuộc họp"],
+  leaders:["Lãnh đạo","Danh sách và màu nhận diện"],
+  reports:["Báo cáo","Xuất dữ liệu, in lịch tuần, sao lưu"],
+  settings:["Kết nối","Liên kết ứng dụng với Google Sheet"]
+};
+
+function render(){
+  document.querySelectorAll('.nav-item').forEach(b=> b.classList.toggle('on', b.dataset.view===state.view));
+  const [t,s] = TITLES[state.view];
+  document.getElementById('pageTitle').textContent = t;
+  document.getElementById('pageSub').textContent = s || subLine();
+  document.getElementById('connDot').className = "dotstat "+(state.online?"live":"off");
+  document.getElementById('connText').textContent = state.online ? "Đã nối Google Sheet" : (state.demo?"Chế độ thử":"Ngoại tuyến");
+  document.getElementById('navTaskCount').textContent = allTasks().filter(t=>!t.done).length;
+  document.getElementById('addBtn').style.display = isBoss() ? "" : "none";
+  document.getElementById('fabBtn').style.display = "";
+
+  if(GOOGLE_CLIENT_ID && state.me){
+    const roleLabel = {thuky:"Thư ký · toàn quyền", lanhdao:"Lãnh đạo · chỉ xem", nhanvien:"Nhân viên · chỉ xem"}[state.me.role] || state.me.role;
+    document.getElementById('brandSub').textContent = roleLabel;
+    document.getElementById('roleSelect').style.display = "none";
+    document.getElementById('whoAmI').innerHTML = `<div style="font-size:12px;font-weight:600">${esc(state.me.name)}</div>
+      <div style="font-size:11px;opacity:.7">${esc(state.me.email)}</div>`;
+    document.getElementById('logoutBtn').style.display = "";
+  } else {
+    document.getElementById('brandSub').textContent = isBoss() ? "Thư ký · toàn quyền" : "Đang xem: "+(leaderById(state.role)?.name||"");
+    document.getElementById('roleSelect').style.display = GOOGLE_CLIENT_ID ? "none" : "";
+    document.getElementById('whoAmI').innerHTML = "";
+    document.getElementById('logoutBtn').style.display = "none";
+  }
+  document.querySelector('[data-view="reports"]').style.display = isEmployee() ? "none" : "";
+  document.querySelector('[data-view="settings"]').style.display = isBoss() ? "" : "none";
+  renderRoleSelect();
+
+  const c = document.getElementById('content');
+  if(state.loading){ c.innerHTML = `<div class="skel"></div><div class="skel"></div><div class="skel"></div>`; return; }
+
+  const views = {dashboard:viewDashboard, day:viewDay, week:viewWeek, month:viewMonth,
+                 tasks:viewTasks, leaders:viewLeaders, reports:viewReports, settings:viewSettings};
+  c.innerHTML = (views[state.view] || viewDashboard)();
+  bind();
+}
+function subLine(){
+  if(state.view==="day") return fmtDate(state.date);
+  if(state.view==="week"){ const w=weekOf(state.date); return `Tuần ${fmtShort(w[0])} – ${fmtShort(w[6])}/${w[6].slice(0,4)}`; }
+  if(state.view==="month"){ const d=parseISO(state.date); return `Tháng ${d.getMonth()+1}/${d.getFullYear()}`; }
+  return "";
+}
+function renderRoleSelect(){
+  if(GOOGLE_CLIENT_ID) return;   // đã đăng nhập thật thì vai trò do server quyết định, không cho tự chọn
+  const sel = document.getElementById('roleSelect');
+  sel.innerHTML = `<option value="thuky">Thư ký (toàn quyền)</option>` +
+    state.leaders.map(l=>`<option value="${l.id}">Xem: ${esc(l.name)}</option>`).join("");
+  sel.value = state.role;
+}
+
+/* Bộ lọc dùng chung */
+function filterBar(extra=""){
+  return `<div class="toolbar">
+    ${extra}
+    ${(GOOGLE_CLIENT_ID || isBoss()) && state.leaders.length ? state.leaders.map(l=>{
+      const on = state.filterLeaders.size===0 || state.filterLeaders.has(l.id);
+      return `<button class="chip ${on?'on':'mut'}" data-chip="${l.id}" ${on?`style="background:${l.color}"`:""}>
+        <span class="dot" style="background:${on?'#fff':l.color}"></span>${esc(l.name)}</button>`;
+    }).join("") : ""}
+    <div class="spacer"></div>
+    <select class="btn sm" id="fPriority">
+      <option value="all">Mọi mức ưu tiên</option>
+      ${Object.entries(PRIO).map(([k,v])=>`<option value="${k}" ${state.filterPriority===k?"selected":""}>${v}</option>`).join("")}
+    </select>
+    <select class="btn sm" id="fStatus">
+      <option value="active" ${state.filterStatus==="active"?"selected":""}>Chưa hủy</option>
+      <option value="all" ${state.filterStatus==="all"?"selected":""}>Tất cả trạng thái</option>
+      ${Object.entries(STAT).map(([k,v])=>`<option value="${k}" ${state.filterStatus===k?"selected":""}>${v}</option>`).join("")}
+    </select>
+  </div>`;
+}
+function dateNav(step){
+  return `<div class="seg">
+      <button data-nav="-1">‹</button>
+      <button data-nav="0">Hôm nay</button>
+      <button data-nav="1">›</button>
+    </div>
+    <input type="date" class="btn sm" id="datePick" value="${state.date}" style="font-weight:600">`;
+}
+
+/* ============================================================
+   5. MÀN HÌNH: ĐIỀU HÀNH
+   ============================================================ */
+function viewDashboard(){
+  const t = todayISO(), w = weekOf(t);
+  const today = eventsOn(t);
+  const week = filtered().filter(e=>w.includes(e.date));
+  const urgent = week.filter(e=>e.priority==="urgent" && e.status==="planned")
+    .sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+  const tasks = allTasks();
+  const overdue = tasks.filter(t2=>!t2.done && t2.due && t2.due < t);
+  const cf = conflicts().filter(c=>c.date>=t);
+  const now = new Date(); const nowM = now.getHours()*60+now.getMinutes();
+  const running = today.filter(e=> mins(e.start)!=null && mins(e.start)<=nowM && (mins(e.end)??mins(e.start)+60)>=nowM);
+  const next = today.find(e=> (mins(e.start)??0) > nowM);
+  const donePct = tasks.length ? Math.round(tasks.filter(x=>x.done).length/tasks.length*100) : 0;
+
+  return `
+  ${state.demo ? `<div class="banner warn"><span>◈</span><div><b>Chế độ thử.</b> Dữ liệu đang là mẫu, chưa nối Google Sheet. Mở mục <b>Kết nối</b> để dán đường dẫn Web App.</div></div>` : ""}
+  ${cf.length ? `<div class="banner bad"><span>⚠</span><div><b>${cf.length} lịch bị trùng giờ.</b>
+     ${cf.slice(0,2).map(c=>`${esc(leaderById(c.leaderId)?.name||"")} ngày ${fmtShort(c.date)}: “${esc(c.a.title)}” chồng “${esc(c.b.title)}”`).join(" · ")}</div></div>` : ""}
+
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="kpi"><div class="n">${today.length}</div><div class="l">Lịch hôm nay</div>
+      <div class="d">${running.length?`Đang diễn ra: ${esc(running[0].title)}`: next?`Kế tiếp ${next.start} · ${esc(next.title)}`:"Không còn lịch trong hôm nay"}</div></div>
+    <div class="kpi brass"><div class="n">${week.length}</div><div class="l">Lịch trong tuần</div>
+      <div class="d">${fmtShort(w[0])} – ${fmtShort(w[6])}</div></div>
+    <div class="kpi signal"><div class="n">${urgent.length}</div><div class="l">Việc khẩn chờ xử lý</div>
+      <div class="d">${urgent[0]?esc(urgent[0].title):"Không có việc khẩn"}</div></div>
+    <div class="kpi ok"><div class="n">${donePct}%</div><div class="l">Nhiệm vụ đã hoàn thành</div>
+      <div class="bar" style="margin-top:8px"><i style="width:${donePct}%"></i></div>
+      <div class="d">${overdue.length} việc quá hạn</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="card-h"><h3>Hôm nay · ${fmtDate(t)}</h3><div class="spacer"></div>
+        <button class="btn sm" data-goto="day">Xem chi tiết</button></div>
+      <div class="card-b">
+        ${today.length ? today.map(evCard).join("") :
+          `<div class="empty"><div class="big">Hôm nay chưa có lịch</div><div>Nhấn “Thêm lịch” để sắp xếp công việc cho lãnh đạo.</div></div>`}
+      </div>
+    </div>
+
+    <div style="display:grid;gap:14px">
+      <div class="card">
+        <div class="card-h"><h3>Lịch của từng lãnh đạo tuần này</h3></div>
+        <div class="card-b">
+          ${state.leaders.length ? state.leaders.map(l=>{
+            const n = week.filter(e=>evLeaders(e).includes(l.id)).length;
+            const max = Math.max(1,...state.leaders.map(x=>week.filter(e=>evLeaders(e).includes(x.id)).length));
+            return `<div style="margin-bottom:11px">
+              <div style="display:flex;gap:8px;align-items:center;font-size:12.5px;margin-bottom:4px">
+                <span class="av" style="background:${l.color}">${initials(l.name)}</span>
+                <span style="font-weight:600">${esc(l.name)}</span><span class="spacer"></span><b>${n}</b>
+              </div>
+              <div class="bar"><i style="width:${n/max*100}%;background:${l.color}"></i></div>
+            </div>`;
+          }).join("") : `<div class="empty">Chưa có lãnh đạo nào.</div>`}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><h3>Nhiệm vụ cần theo dõi</h3><div class="spacer"></div>
+          <button class="btn sm" data-goto="tasks">Tất cả</button></div>
+        <div class="card-b">
+          ${tasks.filter(x=>!x.done).slice(0,5).map(x=>`
+            <div class="task" style="margin-bottom:7px;padding:9px 11px">
+              <div>
+                <div class="t-content" style="font-size:13px">${esc(x.content)}</div>
+                <div class="t-meta">${x.assignee?`<span>${esc(x.assignee)}</span>`:""}
+                  ${x.due?`<span style="color:${x.due<t?'var(--signal)':'inherit'}">Hạn ${fmtShort(x.due)}</span>`:""}
+                  <span>${esc(x.event.title)}</span></div>
+              </div>
+            </div>`).join("") || `<div class="empty" style="padding:22px">Không còn nhiệm vụ nào đang mở.</div>`}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><h3>Việc khẩn sắp tới</h3><div class="spacer"></div>
+          <button class="btn sm" data-goto="week">Xem tuần</button></div>
+        <div class="card-b">
+          ${urgent.slice(0,5).map(e=>`
+            <div class="task" style="margin-bottom:7px;padding:9px 11px;cursor:pointer" data-open="${e.id}">
+              <div>
+                <div class="t-content" style="font-size:13px">${esc(e.title)}</div>
+                <div class="t-meta"><span>${fmtDate(e.date)}${e.start?` · ${e.start}`:""}</span>
+                  ${e.location?`<span>${esc(e.location)}</span>`:""}
+                  <span>${esc(leaderById(e.hostId)?.name||"")}</span></div>
+              </div>
+            </div>`).join("") || `<div class="empty" style="padding:22px">Không có việc khẩn nào trong tuần này.</div>`}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   6. MÀN HÌNH: NGÀY
+   ============================================================ */
+function viewDay(){
+  const evs = eventsOn(state.date);
+  const modeSeg = `<div class="seg">
+      <button data-day="timeline" class="${state.dayMode==='timeline'?'on':''}">Trục giờ</button>
+      <button data-day="list" class="${state.dayMode==='list'?'on':''}">Danh sách</button>
+    </div>`;
+  return filterBar(dateNav()+modeSeg) + (
+    state.dayMode==="timeline" ? timelineHtml(evs) :
+    (evs.length ? evs.map(evCard).join("")
+      : `<div class="card"><div class="empty"><div class="big">Không có lịch ngày ${fmtShort(state.date)}</div>
+         <div>${isBoss()?"Thêm lịch mới bằng nút phía trên.":"Chưa có lịch nào được sắp xếp."}</div></div></div>`)
+  );
+}
+
+function timelineHtml(evs){
+  const vis = visibleLeaderIds().map(leaderById).filter(Boolean);
+  if(!vis.length) return `<div class="card"><div class="empty">Chưa chọn lãnh đạo nào để hiển thị.</div></div>`;
+  const H0=6, H1=20, PX=56;
+  const hours = Array.from({length:H1-H0+1},(_,i)=>H0+i);
+  const cols = `64px repeat(${vis.length},minmax(150px,1fr))`;
+  const now = new Date();
+  const nowTop = (now.getHours()*60+now.getMinutes() - H0*60)/60*PX;
+  const showNow = state.date===todayISO() && nowTop>0 && nowTop < (H1-H0+1)*PX;
+
+  const colHtml = vis.map(l=>{
+    const list = evs.filter(e=>evLeaders(e).includes(l.id));
+    const blocks = list.map(e=>{
+      const s = mins(e.start) ?? H0*60, en = mins(e.end) ?? s+60;
+      const top = Math.max(0,(s-H0*60)/60*PX), h = Math.max(26,(en-s)/60*PX-3);
+      const host = e.hostId===l.id;
+      return `<div class="tl-ev ${e.status==='cancelled'?'cancelled':''}" data-open="${e.id}"
+        style="top:${top}px;height:${h}px;background:${l.color};${host?'':'opacity:.72;border-style:dashed'}">
+        <b>${esc(e.title)}</b>${e.start?`${e.start}${e.end?"–"+e.end:""}`:""}${e.location?` · ${esc(e.location)}`:""}
+        ${host?"":" · dự"}</div>`;
+    }).join("");
+    return `<div class="tl-col">${hours.map(()=>`<div class="tl-slot"></div>`).join("")}${blocks}
+      ${showNow?`<div class="now-line" style="top:${nowTop}px"></div>`:""}</div>`;
+  }).join("");
+
+  return `<div class="tl-wrap">
+    <div class="tl-head" style="grid-template-columns:${cols}">
+      <div class="cell"><div class="ti">Giờ</div></div>
+      ${vis.map(l=>`<div class="cell">
+        <div class="nm"><span class="av" style="background:${l.color};display:inline-grid;vertical-align:-4px;margin-right:5px">${initials(l.name)}</span>${esc(l.name)}</div>
+        <div class="ti">${esc(l.title||"")}</div></div>`).join("")}
+    </div>
+    <div class="tl-body" style="grid-template-columns:${cols}">
+      <div class="tl-hours">${hours.map(h=>`<div class="tl-hour">${pad(h)}:00</div>`).join("")}</div>
+      ${colHtml}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   7. MÀN HÌNH: TUẦN
+   ============================================================ */
+function viewWeek(){
+  const w = weekOf(state.date), vis = visibleLeaderIds().map(leaderById).filter(Boolean);
+  const seg = `<div class="seg">
+      <button data-week="grid" class="${state.weekMode==='grid'?'on':''}">Lưới lãnh đạo</button>
+      <button data-week="list" class="${state.weekMode==='list'?'on':''}">Theo ngày</button>
+    </div><button class="btn sm no-print" id="printBtn">⎙ In lịch tuần</button>`;
+
+  const head = `<div class="print-head">
+      <h2>LỊCH CÔNG TÁC TUẦN CỦA BAN LÃNH ĐẠO</h2>
+      <p>Từ ${fmtDate(w[0])} đến ${fmtDate(w[6])}</p></div>`;
+
+  if(state.weekMode==="grid"){
+    return filterBar(dateNav()+seg) + head + `<div class="scroll-x card" style="padding:0;overflow:hidden">
+      <table class="wk">
+        <thead><tr><th class="lead-cell">Lãnh đạo</th>
+          ${w.map(d=>`<th class="${d===todayISO()?'today':''}">${DOW[parseISO(d).getDay()]} ${fmtShort(d)}</th>`).join("")}
+        </tr></thead>
+        <tbody>${vis.map(l=>`<tr>
+          <td class="lead-cell"><div style="display:flex;gap:7px;align-items:center">
+            <span class="av" style="background:${l.color}">${initials(l.name)}</span>
+            <div><div>${esc(l.name)}</div><div style="font-size:10.5px;color:var(--muted);font-weight:400">${esc(l.title||"")}</div></div>
+          </div></td>
+          ${w.map(d=>{
+            const evs = eventsOn(d).filter(e=>evLeaders(e).includes(l.id));
+            return `<td class="${d===todayISO()?'today':''}">${evs.map(e=>`
+              <div class="wk-chip" data-open="${e.id}" style="border-left-color:${leaderColor(e.hostId)}">
+                <b>${e.start||"--:--"}</b> ${esc(e.title)}
+                ${e.location?`<div style="color:var(--muted)">${esc(e.location)}</div>`:""}
+              </div>`).join("") || `<span style="color:var(--muted);font-size:11px">—</span>`}</td>`;
+          }).join("")}
+        </tr>`).join("") || `<tr><td colspan="8" class="empty">Chưa có lãnh đạo nào.</td></tr>`}</tbody>
+      </table></div>`;
+  }
+  return filterBar(dateNav()+seg) + head + w.map(d=>{
+    const evs = eventsOn(d);
+    return `<div style="margin-bottom:18px">
+      <div style="font-size:13.5px;font-weight:700;margin-bottom:8px;display:flex;gap:8px;align-items:center">
+        ${fmtDate(d)} ${d===todayISO()?`<span class="tag ok">Hôm nay</span>`:""}
+        <span class="tag line">${evs.length} lịch</span></div>
+      ${evs.map(evCard).join("") || `<div style="font-size:12.5px;color:var(--muted);padding:2px 0 8px">Không có lịch.</div>`}
+    </div>`;
+  }).join("");
+}
+
+/* ============================================================
+   8. MÀN HÌNH: THÁNG
+   ============================================================ */
+function viewMonth(){
+  const cells = monthGrid(state.date), cur = parseISO(state.date).getMonth();
+  return filterBar(dateNav()) + `<div class="scroll-x" style="padding-bottom:6px"><div class="mth">
+    ${["T2","T3","T4","T5","T6","T7","CN"].map(d=>`<div class="hd">${d}</div>`).join("")}
+    ${cells.map(iso=>{
+      const d = parseISO(iso), out = d.getMonth()!==cur, evs = eventsOn(iso);
+      return `<div class="dy ${out?'out':''} ${iso===todayISO()?'today':''}" data-date="${iso}">
+        <div class="n">${d.getDate()} ${evs.length?`<small>· ${evs.length}</small>`:""}</div>
+        ${evs.slice(0,3).map(e=>`<div class="m-chip" data-open="${e.id}" style="background:${leaderColor(e.hostId)}">
+          ${e.start?e.start+" ":""}${esc(e.title)}</div>`).join("")}
+        ${evs.length>3?`<div style="font-size:10.5px;color:var(--muted)">+${evs.length-3} lịch khác</div>`:""}
+      </div>`;
+    }).join("")}
+  </div></div>`;
+}
+
+/* ============================================================
+   9. MÀN HÌNH: NHIỆM VỤ
+   ============================================================ */
+function viewTasks(){
+  const t = todayISO();
+  const list = allTasks().filter(x=>{
+    const q = state.search.trim().toLowerCase();
+    if(!q) return true;
+    return (x.content+" "+(x.assignee||"")).toLowerCase().includes(q);
+  });
+  const groups = [
+    ["Quá hạn", list.filter(x=>!x.done && x.due && x.due<t), "signal"],
+    ["Đang mở", list.filter(x=>!x.done && !(x.due && x.due<t)), "brass"],
+    ["Đã xong", list.filter(x=>x.done), "ok"]
+  ];
+  const pct = list.length ? Math.round(list.filter(x=>x.done).length/list.length*100) : 0;
+  return `
+    <div class="card" style="margin-bottom:14px"><div class="card-b" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <div><div style="font-size:26px;font-weight:800;letter-spacing:-1px">${pct}%</div>
+        <div style="font-size:12.5px;color:var(--muted)">hoàn thành · ${list.filter(x=>x.done).length}/${list.length} nhiệm vụ</div></div>
+      <div style="flex:1;min-width:200px"><div class="bar" style="height:10px"><i style="width:${pct}%"></i></div></div>
+    </div></div>
+    ${groups.map(([name,items,kind])=> items.length ? `
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-h"><h3>${name}</h3><span class="tag ${kind==='signal'?'urgent':kind==='brass'?'important':'ok'}">${items.length}</span></div>
+        <div class="card-b">${items.map(x=>`
+          <div class="task ${x.done?'done':''}">
+            <input type="checkbox" ${x.done?"checked":""} data-task="${x.eventId}|${x.idx}" ${isBoss()?"":"disabled"}>
+            <div style="flex:1">
+              <div class="t-content">${esc(x.content)}</div>
+              <div class="t-meta">
+                ${x.assignee?`<span>◐ ${esc(x.assignee)}</span>`:""}
+                ${x.due?`<span style="${!x.done&&x.due<t?'color:var(--signal);font-weight:600':''}">Hạn ${fmtShort(x.due)}</span>`:""}
+                <span>Từ: ${esc(x.event.title)} (${fmtShort(x.event.date)})</span>
+              </div>
+            </div>
+            <button class="mini" data-open="${x.eventId}" title="Mở lịch">↗</button>
+          </div>`).join("")}</div>
+      </div>` : "").join("") ||
+      `<div class="card"><div class="empty"><div class="big">Chưa có nhiệm vụ nào</div>
+       <div>Nhiệm vụ được tạo trong phần “Kết luận & nhiệm vụ” của mỗi lịch họp.</div></div></div>`}
+  `;
+}
+
+/* ============================================================
+   10. MÀN HÌNH: LÃNH ĐẠO
+   ============================================================ */
+function viewLeaders(){
+  const w = weekOf(todayISO());
+  return `
+    <div class="toolbar">
+      ${isBoss()?`<button class="btn primary" id="addLeader">+ Thêm lãnh đạo</button>`:""}
+      <div class="spacer"></div><span style="font-size:12.5px;color:var(--muted)">${state.leaders.length} người</span>
+    </div>
+    <div class="card"><div class="scroll-x"><table class="tb">
+      <thead><tr><th>Họ tên</th><th>Chức danh</th><th>Liên hệ</th><th>Lịch tuần này</th><th>Màu</th><th></th></tr></thead>
+      <tbody>${state.leaders.map(l=>{
+        const n = filtered().filter(e=>w.includes(e.date)&&evLeaders(e).includes(l.id)).length;
+        return `<tr>
+          <td><div style="display:flex;gap:9px;align-items:center">
+            <span class="av" style="background:${l.color};width:28px;height:28px;font-size:11px">${initials(l.name)}</span>
+            <b>${esc(l.name)}</b></div></td>
+          <td>${esc(l.title||"—")}</td>
+          <td style="font-size:12.5px;color:var(--muted)">${esc(l.email||"")}${l.email&&l.phone?" · ":""}${esc(l.phone||"")}</td>
+          <td><b>${n}</b> lịch</td>
+          <td><span style="display:inline-block;width:20px;height:20px;border-radius:6px;background:${l.color}"></span></td>
+          <td style="text-align:right">${isBoss()?`
+            <button class="mini" data-editleader="${l.id}">✎</button>
+            <button class="mini" data-delleader="${l.id}">🗑</button>`:""}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="6" class="empty">Chưa có lãnh đạo nào. Thêm người đầu tiên để bắt đầu xếp lịch.</td></tr>`}
+      </tbody></table></div></div>`;
+}
+
+/* ============================================================
+   11. MÀN HÌNH: BÁO CÁO
+   ============================================================ */
+function viewReports(){
+  const t = todayISO(), w = weekOf(t);
+  const byCat = {};
+  filtered().forEach(e=>{ const c=e.category||"Khác"; byCat[c]=(byCat[c]||0)+1; });
+  const maxCat = Math.max(1,...Object.values(byCat));
+  return `
+    <div class="grid g2" style="margin-bottom:14px">
+      <div class="card"><div class="card-h"><h3>Xuất dữ liệu</h3></div><div class="card-b">
+        <div class="row2">
+          <div class="field"><label>Từ ngày</label><input type="date" id="exFrom" value="${w[0]}"></div>
+          <div class="field"><label>Đến ngày</label><input type="date" id="exTo" value="${w[6]}"></div>
+        </div>
+        <div class="field"><label>Phạm vi lãnh đạo</label>
+          <select id="exLeader">${isBoss()?`<option value="all">Tất cả lãnh đạo</option>`:""}
+            ${state.leaders.filter(l=>isBoss()||l.id===state.role).map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join("")}
+          </select></div>
+        <div class="row2">
+          <button class="btn" id="csvBtn">⇩ Bảng tính (CSV)</button>
+          <button class="btn" id="icsBtn">⇩ Lịch iCal (.ics)</button>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:10px 0 0">
+          File .ics nhập được vào Google Calendar hoặc Outlook để lãnh đạo nhận nhắc lịch trên điện thoại.</p>
+      </div></div>
+
+      <div class="card"><div class="card-h"><h3>Cơ cấu lịch theo loại công việc</h3></div><div class="card-b">
+        ${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`
+          <div style="margin-bottom:10px">
+            <div style="display:flex;font-size:12.5px;margin-bottom:4px"><span>${esc(c)}</span><span class="spacer"></span><b>${n}</b></div>
+            <div class="bar"><i style="width:${n/maxCat*100}%;background:var(--brass)"></i></div>
+          </div>`).join("") || `<div class="empty">Chưa có dữ liệu.</div>`}
+      </div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Sao lưu và phục hồi</h3></div><div class="card-b">
+      <div class="row2">
+        <button class="btn" id="backupBtn">⇩ Tải bản sao lưu JSON</button>
+        <button class="btn" id="restoreBtn">⇧ Phục hồi từ file JSON</button>
+      </div>
+      <input type="file" id="restoreFile" accept="application/json" hidden>
+      <p style="font-size:12px;color:var(--muted);margin:11px 0 0">
+        Phục hồi sẽ ghi đè toàn bộ lãnh đạo và lịch hiện có trên Google Sheet.</p>
+    </div></div>`;
+}
+
+/* ============================================================
+   12. MÀN HÌNH: KẾT NỐI
+   ============================================================ */
+function viewSettings(){
+  return `<div class="card" style="max-width:680px"><div class="card-h"><h3>Liên kết với Google Sheet</h3></div>
+    <div class="card-b">
+      <div class="field"><label>Đường dẫn Web App (kết thúc bằng /exec)</label>
+        <input id="setApi" value="${esc(state.apiUrl)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+      <div class="field"><label>Mã bảo vệ (API_TOKEN trong Script Properties)</label>
+        <input id="setToken" value="${esc(state.token)}" placeholder="Để trống nếu không đặt mã"></div>
+      <div class="row2">
+        <button class="btn" id="testBtn">Kiểm tra kết nối</button>
+        <button class="btn primary" id="saveApi">Lưu và tải dữ liệu</button>
+      </div>
+      <div id="testOut" style="margin-top:12px;font-size:13px"></div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:18px 0">
+      <h4 style="margin:0 0 8px;font-size:13.5px">Các bước triển khai</h4>
+      <ol style="font-size:13px;color:var(--ink-2);padding-left:18px;margin:0;line-height:1.75">
+        <li>Tạo một Google Sheet mới, mở Tiện ích mở rộng → Apps Script.</li>
+        <li>Dán toàn bộ nội dung file <b>Code.gs</b>, chạy hàm <b>setupDatabase</b> một lần để tạo các sheet.</li>
+        <li>Bấm Triển khai → Ứng dụng web, quyền truy cập chọn <b>Bất kỳ ai</b>, rồi sao chép đường dẫn /exec.</li>
+        <li>Dán đường dẫn vào ô phía trên và lưu.</li>
+      </ol>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:14px">
+        Phím tắt: <b>N</b> thêm lịch · <b>T</b> về hôm nay · <b>/</b> tìm kiếm · <b>1–4</b> chuyển màn hình.</p>
+    </div></div>`;
+}
+
+/* ============================================================
+   13. THẺ LỊCH
+   ============================================================ */
+function evCard(e){
+  const host = leaderById(e.hostId);
+  const parts = (e.participantIds||[]).map(leaderById).filter(Boolean);
+  const tasks = e.tasks||[];
+  const doneN = tasks.filter(t=>t.done).length;
+  return `<div class="ev ${e.status==='done'?'done':''} ${e.status==='cancelled'?'cancelled':''}"
+      style="border-left-color:${host?host.color:'#8A968E'}">
+    <div class="ev-time">${e.start||"--:--"}${e.end?`<div class="to">${e.end}</div>`:""}</div>
+    <div style="min-width:0">
+      <div class="ev-title">${esc(e.title)}</div>
+      <div class="ev-meta">
+        ${e.priority!=="normal"?`<span class="tag ${e.priority}">${PRIO[e.priority]}</span>`:""}
+        ${e.status!=="planned"?`<span class="tag ${e.status==='done'?'ok':''}">${STAT[e.status]}</span>`:""}
+        ${e.category?`<span class="tag line">${esc(e.category)}</span>`:""}
+        ${host?`<span class="who"><span class="av" style="background:${host.color}">${initials(host.name)}</span><b>${esc(host.name)}</b> chủ trì</span>`:""}
+        ${parts.length?`<span class="who">cùng dự: ${parts.map(p=>`<span class="av" style="background:${p.color}" title="${esc(p.name)}">${initials(p.name)}</span>`).join("")}</span>`:""}
+        ${e.location?`<span>◎ ${esc(e.location)}</span>`:""}
+      </div>
+      ${e.preparer||e.documents?`<div class="ev-note">${e.preparer?`Chuẩn bị: ${esc(e.preparer)}`:""}${e.preparer&&e.documents?" · ":""}${e.documents?`Tài liệu: ${esc(e.documents)}`:""}</div>`:""}
+      ${e.note?`<div class="ev-note">${esc(e.note)}</div>`:""}
+      ${e.conclusion?`<div class="ev-note" style="color:var(--ink)"><b>Kết luận:</b> ${esc(e.conclusion)}</div>`:""}
+      ${tasks.length?`<div class="ev-note">Nhiệm vụ giao: ${doneN}/${tasks.length} xong · ${esc(tasks[0].content)}${tasks.length>1?` (+${tasks.length-1})`:""}</div>`:""}
+    </div>
+    <div class="ev-actions no-print">
+      <button class="mini" data-open="${e.id}" title="Xem">↗</button>
+      ${isBoss()?`<button class="mini" data-edit="${e.id}" title="Sửa">✎</button>
+      <button class="mini" data-del="${e.id}" title="Xóa">🗑</button>`:""}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   14. GẮN SỰ KIỆN
+   ============================================================ */
+function bind(){
+  const c = document.getElementById('content');
+  c.querySelectorAll('[data-chip]').forEach(b=> b.onclick = ()=>{
+    const id = b.dataset.chip;
+    if(state.filterLeaders.size===0){ state.filterLeaders = new Set(state.leaders.map(l=>l.id)); }
+    state.filterLeaders.has(id) ? state.filterLeaders.delete(id) : state.filterLeaders.add(id);
+    if(state.filterLeaders.size===state.leaders.length) state.filterLeaders.clear();
+    render();
+  });
+  const fp=c.querySelector('#fPriority'); if(fp) fp.onchange=e=>{state.filterPriority=e.target.value;render();};
+  const fs=c.querySelector('#fStatus');   if(fs) fs.onchange=e=>{state.filterStatus=e.target.value;render();};
+
+  c.querySelectorAll('[data-nav]').forEach(b=> b.onclick = ()=>{
+    const n = +b.dataset.nav;
+    const step = state.view==="month"?"m":state.view==="week"?7:1;
+    if(n===0) state.date = todayISO();
+    else if(step==="m"){ const d=parseISO(state.date); d.setMonth(d.getMonth()+n); state.date=toISO(d); }
+    else state.date = addDays(state.date, n*step);
+    render();
+  });
+  const dp=c.querySelector('#datePick'); if(dp) dp.onchange=e=>{state.date=e.target.value;render();};
+  c.querySelectorAll('[data-day]').forEach(b=> b.onclick=()=>{state.dayMode=b.dataset.day;render();});
+  c.querySelectorAll('[data-week]').forEach(b=> b.onclick=()=>{state.weekMode=b.dataset.week;render();});
+  c.querySelectorAll('[data-goto]').forEach(b=> b.onclick=()=>go(b.dataset.goto));
+  c.querySelectorAll('.mth .dy').forEach(d=> d.ondblclick=()=>{state.date=d.dataset.date;go("day");});
+
+  c.querySelectorAll('[data-open]').forEach(b=> b.onclick=ev=>{ev.stopPropagation();openDetail(b.dataset.open);});
+  c.querySelectorAll('[data-edit]').forEach(b=> b.onclick=ev=>{ev.stopPropagation();openEventForm(state.events.find(x=>x.id===b.dataset.edit));});
+  c.querySelectorAll('[data-del]').forEach(b=> b.onclick=ev=>{ev.stopPropagation();delEvent(b.dataset.del);});
+
+  c.querySelectorAll('[data-task]').forEach(cb=> cb.onchange=async ()=>{
+    if(cb.dataset.busy) { cb.checked = !cb.checked; return; }
+    cb.dataset.busy = "1"; cb.disabled = true;
+    const [eid,idx] = cb.dataset.task.split("|");
+    const e = state.events.find(x=>x.id===eid); if(!e){ cb.disabled=false; delete cb.dataset.busy; return; }
+    e.tasks[+idx].done = cb.checked;
+    try{ await pushEvent(e); toast(cb.checked?"Đã đánh dấu hoàn thành":"Đã mở lại nhiệm vụ","ok"); }
+    catch(err){ toast("Không lưu được: "+err.message,"bad"); }
+    render();
+  });
+
+  const al=c.querySelector('#addLeader'); if(al) al.onclick=()=>openLeaderForm(null);
+  c.querySelectorAll('[data-editleader]').forEach(b=> b.onclick=()=>openLeaderForm(leaderById(b.dataset.editleader)));
+  c.querySelectorAll('[data-delleader]').forEach(b=> b.onclick=()=>delLeader(b.dataset.delleader));
+
+  const pb=c.querySelector('#printBtn'); if(pb) pb.onclick=()=>window.print();
+  const cb=c.querySelector('#csvBtn'); if(cb) cb.onclick=()=>exportCsv();
+  const ib=c.querySelector('#icsBtn'); if(ib) ib.onclick=()=>exportIcs();
+  const bb=c.querySelector('#backupBtn'); if(bb) bb.onclick=backup;
+  const rb=c.querySelector('#restoreBtn'); if(rb) rb.onclick=()=>c.querySelector('#restoreFile').click();
+  const rf=c.querySelector('#restoreFile'); if(rf) rf.onchange=e=>restore(e.target.files[0]);
+
+  const sa=c.querySelector('#saveApi');
+  if(sa) sa.onclick=()=> withBusy(sa, "Đang tải…", async ()=>{
+    state.apiUrl = c.querySelector('#setApi').value.trim();
+    state.token  = c.querySelector('#setToken').value.trim();
+    store.set('lclv.api',state.apiUrl); store.set('lclv.token',state.token);
+    toast("Đã lưu cấu hình kết nối","ok"); await loadAll();
+  });
+  const tb=c.querySelector('#testBtn');
+  if(tb) tb.onclick=()=> withBusy(tb, "Đang kiểm tra…", async ()=>{
+    const out=c.querySelector('#testOut'); out.textContent="Đang kiểm tra…";
+    const url=c.querySelector('#setApi').value.trim(), tok=c.querySelector('#setToken').value.trim();
+    const old=[state.apiUrl,state.token]; state.apiUrl=url; state.token=tok;
+    try{ const d=await api.read("ping");
+      out.innerHTML=`<span style="color:var(--ok)">Kết nối tốt. Sheet “${esc(d.file||"")}” · ${d.leaders} lãnh đạo · ${d.events} lịch.</span>`;
+    }catch(err){ out.innerHTML=`<span style="color:var(--signal)">Chưa gọi được: ${esc(err.message)}. Kiểm tra lại quyền truy cập “Bất kỳ ai” khi triển khai.</span>`; }
+    finally{ [state.apiUrl,state.token]=old; }
+  });
+}
+function go(v){ state.view=v; store.set('lclv.view',v); render(); }
+
+/* ============================================================
+   15. MODAL
+   ============================================================ */
+function closeModal(){ document.querySelector('.backdrop')?.remove(); }
+function openModal(html, onMount){
+  closeModal();
+  const wrap=document.createElement('div'); wrap.className='backdrop';
+  wrap.innerHTML=`<div class="modal">${html}</div>`;
+  wrap.onclick=e=>{ if(e.target===wrap) closeModal(); };
+  document.body.appendChild(wrap);
+  onMount?.(wrap);
+}
+
+function openDetail(id){
+  const e = state.events.find(x=>x.id===id); if(!e) return;
+  const host = leaderById(e.hostId), parts=(e.participantIds||[]).map(leaderById).filter(Boolean);
+  const rows = [
+    ["Thời gian", `${fmtDate(e.date)}${e.start?` · ${e.start}${e.end?" – "+e.end:""}`:""}`],
+    ["Địa điểm", e.location],
+    ["Chủ trì", host?`${host.name}${host.title?" – "+host.title:""}`:""],
+    ["Cùng dự", parts.map(p=>p.name).join(", ")],
+    ["Loại", e.category],
+    ["Mức ưu tiên", PRIO[e.priority]],
+    ["Trạng thái", STAT[e.status]],
+    ["Người chuẩn bị", e.preparer],
+    ["Tài liệu", e.documents],
+    ["Ghi chú", e.note],
+    ["Kết luận", e.conclusion]
+  ].filter(r=>r[1]);
+  openModal(`
+    <div class="modal-h"><h2>${esc(e.title)}</h2><button class="icon-btn" id="x">✕</button></div>
+    <table class="tb"><tbody>${rows.map(([k,v])=>`<tr><td style="color:var(--muted);width:130px">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table>
+    ${(e.tasks||[]).length?`<h4 style="margin:16px 0 8px;font-size:13.5px">Nhiệm vụ giao</h4>
+      ${e.tasks.map(t=>`<div class="task ${t.done?'done':''}" style="padding:9px 11px">
+        <span>${t.done?"✓":"○"}</span><div><div class="t-content">${esc(t.content)}</div>
+        <div class="t-meta">${t.assignee?esc(t.assignee):""}${t.due?` · hạn ${fmtShort(t.due)}`:""}</div></div></div>`).join("")}`:""}
+    <div class="modal-actions">
+      <button class="btn" id="ics1">⇩ Thêm vào lịch</button>
+      ${isBoss()?`<button class="btn primary" id="ed">Sửa lịch này</button>
+      <button class="btn danger" id="rm">🗑 Xóa</button>`:""}
+    </div>`, w=>{
+      w.querySelector('#x').onclick=closeModal;
+      w.querySelector('#ics1').onclick=()=>exportIcs([e]);
+      w.querySelector('#ed')?.addEventListener('click',()=>openEventForm(e));
+      w.querySelector('#rm')?.addEventListener('click',()=>{ closeModal(); delEvent(e.id); });
+    });
+}
+
+function taskRow(t={},i=0){
+  return `<div class="task-row" data-i="${i}" style="border:1.5px solid var(--line);border-radius:9px;padding:9px;margin-bottom:8px">
+    <div class="row2"><input class="t-c" placeholder="Nội dung nhiệm vụ" value="${esc(t.content||"")}">
+      <input class="t-a" placeholder="Người phụ trách" value="${esc(t.assignee||"")}"></div>
+    <div style="display:flex;gap:9px;align-items:center;margin-top:7px">
+      <input type="date" class="t-d" value="${esc(t.due||"")}" style="max-width:160px;padding:6px 9px;border:1.5px solid var(--line);border-radius:7px">
+      <label style="display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)">
+        <input type="checkbox" class="t-k" ${t.done?"checked":""}> Đã xong</label>
+      <span class="spacer" style="flex:1"></span>
+      <button type="button" class="mini t-x">🗑</button>
+    </div></div>`;
+}
+
+function openEventForm(ev){
+  const isEdit = !!ev;
+  const e = ev || {id:uid(), date:state.date, start:"08:00", end:"09:00", title:"", location:"",
+    hostId:state.leaders[0]?.id||"", participantIds:[], preparer:"", documents:"", category:"Họp nội bộ",
+    priority:"normal", status:"planned", note:"", conclusion:"", tasks:[]};
+  openModal(`
+    <div class="modal-h"><h2>${isEdit?"Sửa lịch":"Thêm lịch mới"}</h2><button class="icon-btn" id="x">✕</button></div>
+    <div class="field"><label>Nội dung công việc</label>
+      <input id="f_title" value="${esc(e.title)}" placeholder="VD: Họp giao ban tháng"></div>
+    <div class="row3">
+      <div class="field"><label>Ngày</label><input type="date" id="f_date" value="${e.date}"></div>
+      <div class="field"><label>Bắt đầu</label><input type="time" id="f_start" value="${e.start||""}"></div>
+      <div class="field"><label>Kết thúc</label><input type="time" id="f_end" value="${e.end||""}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Chủ trì</label><select id="f_host">
+        ${state.leaders.map(l=>`<option value="${l.id}" ${e.hostId===l.id?"selected":""}>${esc(l.name)}</option>`).join("")}</select></div>
+      <div class="field"><label>Địa điểm</label><input id="f_loc" value="${esc(e.location)}" placeholder="Phòng họp lớn"></div>
+    </div>
+    <div class="field"><label>Lãnh đạo cùng dự</label><div class="pick" id="f_parts">
+      ${state.leaders.filter(l=>l.id!==e.hostId).map(l=>`
+        <label class="opt ${(e.participantIds||[]).includes(l.id)?'on':''}">
+          <input type="checkbox" value="${l.id}" ${(e.participantIds||[]).includes(l.id)?"checked":""} hidden>
+          <span class="av" style="background:${l.color}">${initials(l.name)}</span>${esc(l.name)}</label>`).join("") ||
+      `<span style="font-size:12.5px;color:var(--muted)">Chưa có lãnh đạo khác.</span>`}</div></div>
+    <div class="row3">
+      <div class="field"><label>Loại công việc</label><select id="f_cat">
+        ${CATS.map(c=>`<option ${e.category===c?"selected":""}>${c}</option>`).join("")}</select></div>
+      <div class="field"><label>Mức ưu tiên</label><select id="f_prio">
+        ${Object.entries(PRIO).map(([k,v])=>`<option value="${k}" ${e.priority===k?"selected":""}>${v}</option>`).join("")}</select></div>
+      <div class="field"><label>Trạng thái</label><select id="f_stat">
+        ${Object.entries(STAT).map(([k,v])=>`<option value="${k}" ${e.status===k?"selected":""}>${v}</option>`).join("")}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Đơn vị chuẩn bị</label><input id="f_prep" value="${esc(e.preparer)}" placeholder="Phòng Tổ chức Hành chính"></div>
+      <div class="field"><label>Tài liệu cần có</label><input id="f_doc" value="${esc(e.documents)}" placeholder="Báo cáo tiến độ quý"></div>
+    </div>
+    <div class="field"><label>Ghi chú</label><textarea id="f_note" placeholder="Thông tin thêm cho lãnh đạo">${esc(e.note)}</textarea></div>
+    <div class="field"><label>Kết luận cuộc họp</label><textarea id="f_conc" placeholder="Ghi sau khi họp xong">${esc(e.conclusion)}</textarea></div>
+    <div class="field"><label>Nhiệm vụ giao</label><div id="f_tasks">${(e.tasks||[]).map(taskRow).join("")}</div>
+      <button type="button" class="btn sm" id="addTask">+ Thêm nhiệm vụ</button></div>
+    ${isEdit?`<div class="field"><label>Nhân bản</label>
+      <button type="button" class="btn sm" id="dupBtn">Tạo bản sao sang tuần sau</button></div>`:""}
+    <div class="modal-actions">
+      <button class="btn" id="cancel">Hủy</button>
+      ${isEdit?`<button class="btn danger" id="del">🗑 Xóa</button>`:""}
+      <button class="btn primary" id="save">${isEdit?"Lưu thay đổi":"Thêm lịch"}</button>
+    </div>`, w=>{
+      w.querySelector('#x').onclick=closeModal; w.querySelector('#cancel').onclick=closeModal;
+      w.querySelector('#del')?.addEventListener('click',()=>{ closeModal(); delEvent(e.id); });
+      w.querySelectorAll('#f_parts .opt').forEach(o=> o.onclick=ev2=>{
+        ev2.preventDefault(); const cb=o.querySelector('input'); cb.checked=!cb.checked; o.classList.toggle('on',cb.checked);
+      });
+      const wire = ()=> w.querySelectorAll('.t-x').forEach(b=> b.onclick=()=>b.closest('.task-row').remove());
+      wire();
+      w.querySelector('#addTask').onclick=()=>{
+        w.querySelector('#f_tasks').insertAdjacentHTML('beforeend', taskRow({},Date.now())); wire();
+      };
+      w.querySelector('#dupBtn')?.addEventListener('click', ()=> withBusy(w.querySelector('#dupBtn'), "Đang tạo bản sao…", async ()=>{
+        const copy = {...collect(w,e), id:uid(), date:addDays(w.querySelector('#f_date').value,7), status:"planned", conclusion:"", tasks:[]};
+        state.events.push(copy);
+        try{ await pushEvent(copy); toast("Đã tạo bản sao sang tuần sau","ok"); }catch(err){ toast(err.message,"bad"); }
+        closeModal(); render();
+      }));
+      w.querySelector('#save').onclick=()=> withBusy(w.querySelector('#save'), isEdit?"Đang lưu…":"Đang thêm…", async ()=>{
+        const data = collect(w,e);
+        if(!data.title){ toast("Nhập nội dung công việc trước khi lưu","bad"); return; }
+        if(!data.hostId){ toast("Chọn lãnh đạo chủ trì","bad"); return; }
+        if(data.start && data.end && data.end < data.start){ toast("Giờ kết thúc phải sau giờ bắt đầu","bad"); return; }
+        const i = state.events.findIndex(x=>x.id===data.id);
+        i>=0 ? state.events[i]=data : state.events.push(data);
+        try{ await pushEvent(data); toast(isEdit?"Đã lưu thay đổi":"Đã thêm lịch","ok"); }
+        catch(err){ toast("Không lưu được: "+err.message,"bad"); }
+        state.date = data.date; closeModal(); render();
+      });
+    });
+}
+function collect(w,e){
+  return {
+    id:e.id,
+    title:w.querySelector('#f_title').value.trim(),
+    date:w.querySelector('#f_date').value,
+    start:w.querySelector('#f_start').value,
+    end:w.querySelector('#f_end').value,
+    hostId:w.querySelector('#f_host').value,
+    participantIds:[...w.querySelectorAll('#f_parts input:checked')].map(x=>x.value),
+    location:w.querySelector('#f_loc').value.trim(),
+    category:w.querySelector('#f_cat').value,
+    priority:w.querySelector('#f_prio').value,
+    status:w.querySelector('#f_stat').value,
+    preparer:w.querySelector('#f_prep').value.trim(),
+    documents:w.querySelector('#f_doc').value.trim(),
+    note:w.querySelector('#f_note').value.trim(),
+    conclusion:w.querySelector('#f_conc').value.trim(),
+    tasks:[...w.querySelectorAll('.task-row')].map(r=>({
+      content:r.querySelector('.t-c').value.trim(),
+      assignee:r.querySelector('.t-a').value.trim(),
+      due:r.querySelector('.t-d').value,
+      done:r.querySelector('.t-k').checked
+    })).filter(t=>t.content)
+  };
+}
+
+function openLeaderForm(l0){
+  const isEdit=!!l0;
+  const l = l0 || {id:uid(),name:"",title:"",color:PALETTE[state.leaders.length%PALETTE.length],email:"",phone:""};
+  openModal(`
+    <div class="modal-h"><h2>${isEdit?"Sửa thông tin lãnh đạo":"Thêm lãnh đạo"}</h2><button class="icon-btn" id="x">✕</button></div>
+    <div class="field"><label>Họ và tên</label><input id="l_name" value="${esc(l.name)}" placeholder="Nguyễn Văn A"></div>
+    <div class="field"><label>Chức danh</label><input id="l_title" value="${esc(l.title)}" placeholder="Phó Tổng Giám đốc"></div>
+    <div class="row2">
+      <div class="field"><label>Email</label><input id="l_email" value="${esc(l.email||"")}"></div>
+      <div class="field"><label>Điện thoại</label><input id="l_phone" value="${esc(l.phone||"")}"></div>
+    </div>
+    <div class="field"><label>Màu nhận diện trên lịch</label>
+      <div class="pick" id="sw">${PALETTE.map(c=>`<span class="sw ${c===l.color?'on':''}" data-c="${c}" style="background:${c}"></span>`).join("")}</div></div>
+    <div class="modal-actions"><button class="btn" id="cancel">Hủy</button>
+      <button class="btn primary" id="save">${isEdit?"Lưu thay đổi":"Thêm lãnh đạo"}</button></div>`, w=>{
+      let color=l.color;
+      w.querySelector('#x').onclick=closeModal; w.querySelector('#cancel').onclick=closeModal;
+      w.querySelectorAll('.sw').forEach(s=> s.onclick=()=>{
+        color=s.dataset.c; w.querySelectorAll('.sw').forEach(y=>y.classList.remove('on')); s.classList.add('on');
+      });
+      w.querySelector('#save').onclick=()=> withBusy(w.querySelector('#save'), isEdit?"Đang lưu…":"Đang thêm…", async ()=>{
+        const name=w.querySelector('#l_name').value.trim();
+        if(!name){ toast("Nhập họ tên trước khi lưu","bad"); return; }
+        const data={id:l.id,name,title:w.querySelector('#l_title').value.trim(),color,
+          email:w.querySelector('#l_email').value.trim(),phone:w.querySelector('#l_phone').value.trim()};
+        const i=state.leaders.findIndex(x=>x.id===data.id);
+        i>=0 ? state.leaders[i]=data : state.leaders.push(data);
+        try{ await pushLeader(data); toast(isEdit?"Đã lưu thay đổi":"Đã thêm lãnh đạo","ok"); }
+        catch(err){ toast("Không lưu được: "+err.message,"bad"); }
+        closeModal(); render();
+      });
+    });
+}
+
+async function delEvent(id){
+  const e=state.events.find(x=>x.id===id); if(!e) return;
+  if(!confirm(`Xóa lịch “${e.title}” ngày ${fmtShort(e.date)}?`)) return;
+  state.events=state.events.filter(x=>x.id!==id);
+  try{ await removeEvent(id); toast("Đã xóa lịch","ok"); }catch(err){ toast("Không xóa được: "+err.message,"bad"); }
+  render();
+}
+async function delLeader(id){
+  const l=leaderById(id); if(!l) return;
+  const n=state.events.filter(e=>evLeaders(e).includes(id)).length;
+  if(!confirm(n?`${l.name} còn ${n} lịch đã lưu. Xóa người này, các lịch cũ vẫn giữ nhưng không hiện tên. Tiếp tục?`
+              :`Xóa ${l.name}?`)) return;
+  state.leaders=state.leaders.filter(x=>x.id!==id);
+  try{ await removeLeader(id); toast("Đã xóa lãnh đạo","ok"); }catch(err){ toast("Không xóa được: "+err.message,"bad"); }
+  render();
+}
+
+/* ============================================================
+   16. XUẤT DỮ LIỆU
+   ============================================================ */
+function download(name, content, type){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type}));
+  a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+function rangeEvents(){
+  const c=document.getElementById('content');
+  const from=c.querySelector('#exFrom')?.value||"0000-01-01";
+  const to=c.querySelector('#exTo')?.value||"9999-12-31";
+  const who=c.querySelector('#exLeader')?.value||"all";
+  return {from,to,rows:state.events.filter(e=>{
+    if(e.date<from||e.date>to) return false;
+    if(who!=="all" && !evLeaders(e).includes(who)) return false;
+    return true;
+  }).sort((a,b)=>a.date===b.date?(a.start||"").localeCompare(b.start||""):a.date.localeCompare(b.date))};
+}
+function exportCsv(){
+  const {from,to,rows}=rangeEvents();
+  const head=["Ngày","Bắt đầu","Kết thúc","Chủ trì","Cùng dự","Nội dung","Địa điểm","Loại","Đơn vị chuẩn bị",
+              "Tài liệu","Ưu tiên","Trạng thái","Ghi chú","Kết luận","Nhiệm vụ giao"];
+  const data=[head,...rows.map(e=>[
+    e.date,e.start||"",e.end||"",leaderById(e.hostId)?.name||"",
+    (e.participantIds||[]).map(i=>leaderById(i)?.name).filter(Boolean).join("; "),
+    e.title,e.location||"",e.category||"",e.preparer||"",e.documents||"",
+    PRIO[e.priority]||"",STAT[e.status]||"",e.note||"",e.conclusion||"",
+    (e.tasks||[]).map(t=>`${t.content}${t.assignee?" ("+t.assignee+")":""}${t.due?" hạn "+t.due:""}${t.done?" [xong]":""}`).join("; ")
+  ])];
+  const csv="\uFEFF"+data.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  download(`lich-cong-tac_${from}_${to}.csv`,csv,"text/csv;charset=utf-8;");
+  toast("Đã tải file CSV","ok");
+}
+function exportIcs(list){
+  const rows = list || rangeEvents().rows;
+  if(!rows.length){ toast("Không có lịch nào trong khoảng đã chọn","bad"); return; }
+  const stamp = d => d.replace(/[-:]/g,"");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Lich cong tac lanh dao//VI","CALSCALE:GREGORIAN"];
+  rows.forEach(e=>{
+    const s=(e.start||"08:00")+":00", en=(e.end||e.start||"09:00")+":00";
+    lines.push("BEGIN:VEVENT",`UID:${e.id}@lichcongtac`,
+      `DTSTART;TZID=Asia/Ho_Chi_Minh:${stamp(e.date)}T${stamp(s)}`,
+      `DTEND;TZID=Asia/Ho_Chi_Minh:${stamp(e.date)}T${stamp(en)}`,
+      `SUMMARY:${(e.title||"").replace(/[,;]/g,"\\$&")}`,
+      `LOCATION:${(e.location||"").replace(/[,;]/g,"\\$&")}`,
+      `DESCRIPTION:Chủ trì ${leaderById(e.hostId)?.name||""}. ${(e.note||"").replace(/\n/g,"\\n")}`,
+      "BEGIN:VALARM","TRIGGER:-PT30M","ACTION:DISPLAY","DESCRIPTION:Nhắc lịch","END:VALARM","END:VEVENT");
+  });
+  lines.push("END:VCALENDAR");
+  download(`lich-cong-tac.ics`,lines.join("\r\n"),"text/calendar;charset=utf-8;");
+  toast("Đã tải file lịch iCal","ok");
+}
+function backup(){
+  download(`sao-luu-lich_${todayISO()}.json`,
+    JSON.stringify({leaders:state.leaders,events:state.events,exportedAt:new Date().toISOString()},null,2),
+    "application/json");
+  toast("Đã tải bản sao lưu","ok");
+}
+function restore(file){
+  if(!file) return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(!Array.isArray(d.leaders)||!Array.isArray(d.events)) throw new Error("Sai định dạng");
+      if(!confirm(`File chứa ${d.leaders.length} lãnh đạo và ${d.events.length} lịch. Ghi đè toàn bộ dữ liệu hiện có?`)) return;
+      state.leaders=d.leaders; state.events=d.events;
+      if(state.online) await api.post("replaceAll",{leaders:d.leaders,events:d.events});
+      toast("Đã phục hồi dữ liệu","ok"); render();
+    }catch(err){ toast("Không đọc được file: "+err.message,"bad"); }
+  };
+  r.readAsText(file);
+}
+
+/* ============================================================
+   17. KHỞI ĐỘNG
+   ============================================================ */
+document.querySelectorAll('.nav-item').forEach(b=> b.onclick=()=>go(b.dataset.view));
+document.getElementById('addBtn').onclick=()=>openEventForm(null);
+document.getElementById('fabBtn').onclick=()=> isBoss()?openEventForm(null):toast("Chỉ thư ký mới thêm được lịch","bad");
+document.getElementById('refreshBtn').onclick=()=>{ loadAll(); toast("Đang tải lại dữ liệu"); };
+document.getElementById('roleSelect').onchange=e=>{ state.role=e.target.value; state.filterLeaders.clear(); render(); };
+document.getElementById('searchInput').oninput=e=>{ state.search=e.target.value; render(); };
+document.getElementById('themeBtn').onclick=()=>{
+  const next = document.documentElement.dataset.theme==="dark" ? "light" : "dark";
+  document.documentElement.dataset.theme=next; store.set('lclv.theme',next);
+};
+document.getElementById('logoutBtn').onclick=logout;
+document.documentElement.dataset.theme = store.get('lclv.theme') || "light";
+
+document.addEventListener('keydown', e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if(e.key==="/"){ e.preventDefault(); document.getElementById('searchInput').focus(); }
+  if(e.key==="n"||e.key==="N"){ if(isBoss()) openEventForm(null); }
+  if(e.key==="t"||e.key==="T"){ state.date=todayISO(); render(); }
+  if(e.key==="Escape") closeModal();
+  const map={1:"dashboard",2:"day",3:"week",4:"month",5:"tasks"};
+  if(map[e.key]) go(map[e.key]);
+});
+
+setInterval(()=>{
+  const busy = document.querySelector('.backdrop') || document.activeElement===document.getElementById('searchInput');
+  if(state.online && !busy) loadAll({silent:true});
+}, 120000);
+boot();
+</script>
+</body>
+</html>
